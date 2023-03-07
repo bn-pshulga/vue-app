@@ -2,7 +2,7 @@
 
 body {
   min-height: 100vh;
-  background: url("src/assets/bg.png") no-repeat center center fixed;
+  background: url("/src/assets/bg.png") no-repeat center center fixed;
   background-size: cover;
   font-family: 'Open Sans', sans-serif;
   color: #000000;
