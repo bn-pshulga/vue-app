@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import Header from "@/components/header/Header.vue";
 </script>
 
 <template>
-  <header>
-    <img alt="logo" class="logo" src="@/assets/logo.svg"/>
-  </header>
+  <Header />
   <RouterView />
 </template>
 
-<style scoped>
-  header {
-    padding: 59px 74px;
-  }
-</style>

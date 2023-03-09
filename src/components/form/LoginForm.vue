@@ -1,33 +1,95 @@
-<script setup lang="ts">
+<script lang="ts">
   import WindowsIcon from '@/components/icons/WindowsIcon.vue';
+  import { defineComponent, reactive } from 'vue';
+  import AccountView from '@/views/AccountView.vue';
+  import router from '@/router';
+
+  export default defineComponent({
+    components: {
+      WindowsIcon,
+      AccountView,
+    },
+    setup() {
+      const formState = reactive({
+        email: '',
+        password: '',
+      });
+      const onFinish = (values: any) => {
+        if (values.email !== 'admin' || values.password !== 'admin') {
+          alert('Wrong credentials');
+          return;
+        } else {
+          alert('Success');
+          localStorage.setItem('token', 'allow-to-enter' )
+          router.push({ name: 'account' })
+        }
+      };
+      const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+      };
+      return {
+        formState,
+        onFinish,
+        onFinishFailed,
+      };
+    },
+  });
+
 </script>
 
 <template>
-  <form>
-    <h2 class="form-title">Log in</h2>
-    <label class="form-label" for="email">
-      Email
-      <input class="form-input" type="email"/>
-    </label>
-    <label class="form-label" for="password">
-      Password
-      <input class="form-input" type="password"/>
-    </label>
-    <button type="submit" class="form-button">Login</button>
-    <div class="or-block">
-      <span class="or-block__line"></span>
-      <span class="or-block__text">or</span>
-      <span class="or-block__line"></span>
-    </div>
-    <button type="submit" class="microsoft-button">
-      <WindowsIcon />
-      Log in with Microsoft
-    </button>
-  </form>
+    <a-form
+        :model="formState"
+        :label-col="{ span: 24 }"
+        :wrapper-col="{ span: 24 }"
+        name="basic"
+        class="login-form"
+        autocomplete="off"
+        @finish="onFinish(formState)"
+        @finishFailed="onFinishFailed"
+    >
+      <h2 class="form-title">Log in</h2>
+      <a-form-item
+          class="form-label"
+          label="Email"
+          :label-col="{ span: 24 }"
+          name="email"
+          :rules="[{ required: true, message: 'Please input your username!' }]"
+      >
+        <a-input
+            class="form-input"
+            v-model:value="formState.email" />
+      </a-form-item>
+
+      <a-form-item
+          class="form-label"
+          label="Password"
+          name="password"
+          :rules="[{ required: true, message: 'Please input your password!' }]"
+      >
+        <a-input-password
+            v-model:value="formState.password"
+            class="form-input"
+        />
+      </a-form-item>
+
+      <a-button type="primary" class="form-button" html-type="submit">Login</a-button>
+      <div class="or-block">
+        <div class="or-block__line"></div>
+        <div class="or-block__text">or</div>
+        <div class="or-block__line"></div>
+      </div>
+      <a-button type="primary" class="microsoft-button" html-type="submit">
+        <WindowsIcon />
+        Log in with Microsoft
+      </a-button>
+    </a-form>
 </template>
 
 <style scoped>
-  form {
+  .login-form {
+    position: relative;
+    left: 10%;
     margin-top: 66px;
     background: #FFFFFF;
     border-radius: 8px;
@@ -36,7 +98,6 @@
     align-items: center;
     justify-content: flex-start;
     padding: 69px 94px 49px;
-    height: 554px;
     width: 473px;
   }
 
@@ -49,8 +110,9 @@
   }
 
   .form-label {
+    /*height: 80px;*/
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 8px;
@@ -64,17 +126,17 @@
   }
 
   .form-input {
+    width: 100%;
     border: 1px solid #DADADA;
     border-radius: 4px;
     height: 40px;
-    width: 100%;
     padding: 12px 16px;
   }
 
   .form-button {
+    width: 100%;
     background: #1EC0D6;
     height: 40px;
-    width: 100%;
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -82,6 +144,8 @@
     line-height: 22px;
     letter-spacing: 0;
     color: #FFFFFF;
+    padding: 0;
+    justify-content: center;
   }
 
   .or-block {
@@ -110,6 +174,7 @@
   }
 
   .microsoft-button {
+    height: 40px;
     border: 1px solid #1EC0D6;
     border-radius: 4px;
     padding: 9px 0;
@@ -124,6 +189,6 @@
     font-weight: 600;
     line-height: 22px;
     letter-spacing: 0;
+    text-shadow: none;
   }
-
 </style>
