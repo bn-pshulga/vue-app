@@ -1,13 +1,3 @@
-<template>
-  <a-table
-    :columns="columns"
-    :data-source="data"
-    :table-layout="auto"
-    :pagination="{ pageSize: 50 }"
-    :scroll="{ y: 240 }"
-    class="invoices-table"
-  />
-</template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 const columns = [
@@ -43,3 +33,14 @@ export default defineComponent({
   },
 });
 </script>
+<template>
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    tableLayout="auto"
+    :pagination="{ pageSize: 50 }"
+    :scroll="{ y: 240 }"
+    class="invoices-table"
+  />
+</template>
+
