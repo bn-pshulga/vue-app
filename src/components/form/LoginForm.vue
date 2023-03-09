@@ -11,11 +11,11 @@
     },
     setup() {
       const formState = reactive({
-        email: '',
+        name: '',
         password: '',
       });
       const onFinish = (values: any) => {
-        if (values.email !== 'admin' || values.password !== 'admin') {
+        if (values.name !== 'admin' || values.password !== 'admin') {
           alert('Wrong credentials');
           return;
         } else {
@@ -53,12 +53,12 @@
           class="form-label"
           label="Email"
           :label-col="{ span: 24 }"
-          name="email"
+          name="name"
           :rules="[{ required: true, message: 'Please input your username!' }]"
       >
         <a-input
             class="form-input"
-            v-model:value="formState.email" />
+            v-model:value="formState.name" />
       </a-form-item>
 
       <a-form-item
